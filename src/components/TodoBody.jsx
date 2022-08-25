@@ -8,7 +8,7 @@ export default function TodoBody() {
   const todos = useSelector((state) => state.todos);
   const update = useSelector((state) => state.update);
   const [editInput, setEditInput] = useState(update ? update.text : "");
-
+  
   const { removeTodo } = bindActionCreators(actionTodo, useDispatch());
   const { setUpdateTodo, saveUpdateTodo } = bindActionCreators(
     actionUpdate,
