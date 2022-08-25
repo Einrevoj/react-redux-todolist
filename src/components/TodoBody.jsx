@@ -8,7 +8,7 @@ export default function TodoBody() {
   const todos = useSelector((state) => state.todos);
   const update = useSelector((state) => state.update);
   const [editInput, setEditInput] = useState(update ? update.text : "");
-  
+
   const { removeTodo } = bindActionCreators(actionTodo, useDispatch());
   const { setUpdateTodo, saveUpdateTodo } = bindActionCreators(
     actionUpdate,
@@ -32,6 +32,7 @@ export default function TodoBody() {
           <input
             className="text"
             value={update.id !== todo.id ? todo.text : editInput}
+            onChange={(e) => setEditInput(e.target.value)}
             readOnly={update.id !== todo.id}
           />
         </div>

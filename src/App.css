@@ -4,6 +4,12 @@ header {
 	width: 100%;
 	margin: 0 auto;
 }
+.todo-body {
+	padding: 2rem 1rem;
+	max-width: 800px;
+	width: 100%;
+	margin: 0 auto;
+}
 #new-task-input {
 	flex: 1;
 	background-color: var(--darker);
