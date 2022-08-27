@@ -9,6 +9,7 @@ header {
 	max-width: 800px;
 	width: 100%;
 	margin: 0 auto;
+
 }
 #new-task-input {
 	flex: 1;
@@ -55,7 +56,7 @@ main {
 .task-list h2 {
 	font-size: 1.5rem;
 	font-weight: 300;
-	color: var(--grey);
+	color: var(--grey) !important;
 	margin-bottom: 1rem;
 }
 #tasks .task {

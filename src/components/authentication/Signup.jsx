@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./Signup.css";
 import { Button, Form, Modal } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import * as registerAction from "../../redux/actions/actionRegister";
 import { bindActionCreators } from "redux";
 import { useDispatch, useSelector } from "react-redux";
+import * as registerAction from "../../redux/actions/actionRegister";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Signup() {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [showModal, setShowModal] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
-  //Redux
+  // Redux
   const { registerUser } = bindActionCreators(registerAction, useDispatch());
   const userList = useSelector((state) => state.userList);
 
-  //Validation
+  // Validation
   const [invalidUsername, setInvalidUsername] = useState(false);
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [invalidPassword, setInvalidPassword] = useState(false);
@@ -25,13 +25,15 @@ export default function Signup() {
   const checkIfValid = () => {
     let isValid = true;
     userList.forEach((item) => {
+      // Check if username is valid
       if (item.username === username) {
         isValid = false;
         setInvalidUsername(true);
       } else {
         setInvalidUsername(false);
       }
-      // check email if valid
+
+      // Check if email is valid
       if (item.email === email) {
         isValid = false;
         setInvalidEmail(true);
@@ -39,13 +41,15 @@ export default function Signup() {
         setInvalidEmail(false);
       }
     });
-    // Check if password is same with confirmed password
+
+    // Check if password is same with confirmPassword
     if (password !== confirmPassword) {
       setInvalidPassword(true);
       isValid = false;
     } else {
       setInvalidPassword(false);
     }
+
     return isValid;
   };
 
@@ -56,18 +60,20 @@ export default function Signup() {
       setShowModal(true);
     }
   };
+
   const closeRegistration = () => {
     setShowModal(false);
     setUsername("");
+    setEmail("");
     setPassword("");
     setConfirmPassword("");
   };
 
   return (
     <div className={styles.container}>
-      <form className={styles.formContainer} onSubmit={handleSubmit}>
+      <Form className={styles.formContainer} onSubmit={handleSubmit}>
         <h2>REGISTER</h2>
-        <Form.Group className="mb-3" contolId="formUsername">
+        <Form.Group className="mb-3" controlId="formUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control
             type="text"
@@ -83,44 +89,48 @@ export default function Signup() {
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="mb-3" contolId="su-formEmail">
+        <Form.Group className="mb-3" controlId="su-formEmail">
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
             size="sm"
+            placeholder="Enter Your Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter Your Email"
-            autoComplete="email"
             isInvalid={invalidEmail}
+            autoComplete="email"
           ></Form.Control>
           <Form.Control.Feedback type="invalid">
             email already exist.
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="mb-3" contolId="su-formPassword">
+        <Form.Group className="mb-3" controlId="su-formPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
             size="sm"
+            placeholder="Enter Your Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter Your Password"
             autoComplete="new-password"
+            isInvalid={invalidPassword}
           ></Form.Control>
+          <Form.Control.Feedback type="invalid">
+            The password confirmation does not match
+          </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="mb-3" contolId="formConfirmPassword">
-          <Form.Label>Password</Form.Label>
+        <Form.Group className="mb-3" controlId="formConfirmPassword">
+          <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             type="password"
             size="sm"
+            placeholder="Re-Enter Your Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Re-Enter Your Password"
             autoComplete="new-password"
-            isValid={invalidPassword}
+            isInvalid={invalidPassword}
           ></Form.Control>
           <Form.Control.Feedback type="invalid">
             The password confirmation does not match
@@ -144,7 +154,7 @@ export default function Signup() {
         <Button variant="info" type="submit" className={styles.button}>
           Submit
         </Button>
-      </form>
+      </Form>
     </div>
   );
 }
