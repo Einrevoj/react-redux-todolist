@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./Login.css";
 import { Button, Form } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from "react-redux";
 import * as actionLogin from "../../redux/actions/actionLogin";
 import { bindActionCreators } from "redux";
@@ -18,17 +17,18 @@ export default function Login() {
   const checkIfValid = () => {
     let isValid = false;
 
-    //check if use exist
+    // Check if user exist
     userList.forEach((user) => {
       if (user.email === email && user.password === password) {
         setInvalidUser(false);
         isValid = true;
-        console.log("Successful login");
+        console.log("Successful Login");
       } else {
-        console.log("Failed login");
+        console.log("Failed Login");
         setInvalidUser(true);
       }
     });
+
     return isValid;
   };
 
@@ -43,6 +43,7 @@ export default function Login() {
     <div className={styles.container}>
       <Form className={styles.formContainer} onSubmit={handleSubmit}>
         <h2>LOGIN</h2>
+
         <Form.Group className="mb-4" controlId="formEmail">
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -51,10 +52,10 @@ export default function Login() {
             placeholder="Enter Your Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            isIvalid={invalidUser}
+            isInvalid={invalidUser}
           ></Form.Control>
           <Form.Control.Feedback type="invalid">
-            Invalid user
+            Invalid User
           </Form.Control.Feedback>
         </Form.Group>
 
@@ -66,10 +67,10 @@ export default function Login() {
             placeholder="Enter Your Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            isIvalid={invalidUser}
+            isInvalid={invalidUser}
           ></Form.Control>
           <Form.Control.Feedback type="invalid">
-            Invalid user
+            Invalid User
           </Form.Control.Feedback>
         </Form.Group>
 
